@@ -1,6 +1,7 @@
 package com.sc.demo.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,14 @@ public class BasicController {
 	public String getSth() {
 
 		return "hello world";
+
+	}
+
+
+	@GetMapping("/get")
+	public String getDataFromRequest(@RequestParam String name) {
+
+		return "hello world："+name;
 
 	}
 
@@ -71,13 +80,29 @@ public class BasicController {
 
 		return  u;
 	}
+/**
+	 *
+	 * 'content-type' : application/json
+	 *
+	 *
+	 * RequestParam -> form-data
+	 * curl --location --request POST 'http://localhost:8080/post/form' \
+     * --form 'u="123"'
+	 *
+	 *
+	 */
+	@PostMapping(value = {"/post/form"})
+	public String postJsonWithRequstParam( @RequestParam String u) {
+
+		return  u;
+	}
 
 	/**
 	 *
 	 * 'content-type' : application/json
 	 *
+	 * 使用 @RequestBody注解标识，使用body-json格式传入参数
 	 *
-	 * 不使用任何注解的参数，默认和@RequestBody一样的效果
 	 * curl --location --request POST 'http://localhost:8080/post/json' \
 	 * --header 'Content-Type: application/json' \
 	 * --data-raw '{
@@ -93,8 +118,14 @@ public class BasicController {
 	}
 
 
+	@PostMapping(value = {"/post/"})
+	public Map postDefault( @RequestBody Map<String, String> info) {
 
-	@RequestMapping(value = {"/post"}, method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+		return  info;
+	}
+
+
+	@RequestMapping(value = {"/post/another"}, method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public String postTest(Long uid, @RequestParam(value = "ids",required = false) List<Long> ids) {
 
