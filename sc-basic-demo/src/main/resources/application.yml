@@ -1,0 +1,6 @@
+#spring:
+#  application:
+#    name: macaron
+#  cloud:
+#    config:
+#      uri: http://config.al:8001/
