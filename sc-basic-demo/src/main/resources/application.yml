@@ -4,3 +4,8 @@
 #  cloud:
 #    config:
 #      uri: http://config.al:8001/
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
